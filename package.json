@@ -1,0 +1,19 @@
+{
+  "name": "continious-handshake",
+  "version": "0.0.1",
+  "description": "Continious Handshake for TEDxCERN",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drjova/continuous-handshake.git"
+  },
+  "author": "Harris Tzovanakis <me@drjova.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drjova/continuous-handshake/issues"
+  },
+  "homepage": "https://github.com/drjova/continuous-handshake"
+}
