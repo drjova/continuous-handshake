@@ -3,6 +3,7 @@ $(document).ready(function() {
 
   var $sliderTop = $('.handshake-top-slider');
   var $sliderBottom = $('.handshake-bottom-slider');
+  var HANDSHAKE_IMAGES_TO_SHOW = 10;
 
   /*
    * Socket.io connection and listeners
@@ -29,7 +30,7 @@ $(document).ready(function() {
     },
     checkImageLimit: function() {
       console.info('Handshake.checkImageLimit');
-      if ($sliderBottom.find('img').length > 15) {
+      if ($sliderBottom.find('img').length > HANDSHAKE_IMAGES_TO_SHOW) {
         // Remove the first image
         $sliderBottom.slick('slickRemove', 0);
         console.info('Handshake.checkImageLimit', 'Removing first image');
@@ -86,13 +87,17 @@ $(document).ready(function() {
     slidesToScroll: 1,
     arrows: false,
     fade: true,
-    lazyLoad: 'ondemand'
+    lazyLoad: 'ondemand',
+    draggable: false
   });
 
   $sliderBottom.slick({
-    slidesToShow: 15,
+    slidesToShow: HANDSHAKE_IMAGES_TO_SHOW,
     slidesToScroll: 1,
     dots: false,
     lazyLoad: 'ondemand',
+    infinite: false,
+    draggable: false,
+    arrows: false
   });
 });

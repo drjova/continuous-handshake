@@ -8,14 +8,13 @@ html {
 	position: relative;
 }
 body {
-	width: vw;
+	width: 100%;
 	height: vh;
 	overflow: hidden;
 	padding: 0!important;
 	margin: 0!important;
 	background: #0F2B3E;
 }
-
 img {
 	max-width: 100%;
 }
@@ -25,30 +24,32 @@ img {
 }
 .handshake-top-slider {
 	margin: 0 auto;
-	max-height: 85vh;
-	height: 85vh;
+	max-height: 80vh;
+	height: 80vh;
 	text-align: center;
 }
 .handshake-bottom-slider {
 	margin: 0 auto!important;
 	background: #D81F27;
-	height: 15vh;		
+	height: 20vh;		
+	max-width: 100%!important;
 }
-
 .handshake-top-slider img{
-	margin: 15px auto;
+	margin: 14px auto;
 	max-width: 100%;
 	max-height: 100%;
 	border: 2px solid  #fff;
 }
-
 .handshake-bottom-slider img{
-	max-width: 140px;
+	max-width: 150px;
 	max-height: 200px;
 	border: 2px solid  #fff;
 }
-
+.handshake-bottom-slider .slick-slide{
+	max-width: 150px;
+	margin: 0 20px;
+}
 .handshake-bottom-slider .slick-track{
-	margin: 5px auto!important;
-	padding: 36px 10px;		
+	margin: 0px auto!important;
+	padding: 30px 0 30px 15px;	
 }

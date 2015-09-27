@@ -41,7 +41,7 @@ io.on('connection', function(socket) {
       })
       .sort(function(a, b) { return b.time - a.time; })
       .map(function(v) { return v.name; });
-  socket.emit('handshake.previous.pictures', files.slice(0, 15));
+  socket.emit('handshake.previous.pictures', files.slice(0, 10));
 });
 
 // App settings
