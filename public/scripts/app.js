@@ -93,8 +93,6 @@ $(document).ready(function() {
     slidesToShow: 15,
     slidesToScroll: 1,
     dots: false,
-    centerMode: true,
     lazyLoad: 'ondemand',
-    variableWidth: true
   });
 });
