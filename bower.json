@@ -1,0 +1,21 @@
+{
+  "name": "continious-handshake",
+  "version": "0.0.1",
+  "homepage": "https://github.com/drjova/continuous-handshake",
+  "authors": [
+    "Harris Tzovanakis <me@drjova.com>"
+  ],
+  "description": "Continious Handshake for TEDxCERN",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "slick-carousel": "~1.5.8",
+    "angular": "~1.4.6"
+  }
+}

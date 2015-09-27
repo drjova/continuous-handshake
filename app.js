@@ -1,5 +1,7 @@
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
+
 var app = express();
 
 // Configure the server
@@ -27,11 +29,24 @@ io.on('connection', function(socket) {
   appEvents.on('handshake.new.picture', function(data) {
     socket.emit('handshake.new.picture', data);
   });
+
+  // Emit the previous files
+  var dir = path.join(__dirname, 'public', 'photos');
+  var files = fs.readdirSync(dir)
+    .map(function(v) {
+        return {
+          name: v,
+          time: fs.statSync(dir +'/' + v).mtime.getTime()
+        };
+      })
+      .sort(function(a, b) { return b.time - a.time; })
+      .map(function(v) { return v.name; });
+  socket.emit('handshake.previous.pictures', files.slice(0, 15));
 });
 
 // App settings
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -43,10 +58,12 @@ watch.createMonitor('./public/photos', function(monitor) {
   console.log('initializing watch');
   monitor.on("created", function(f, stat) {
     appEvents.emit('handshake.new.picture', {
-      file: f
+      images: f.replace('public', '')
     });
   });
 });
+
+
 
 // Listen to port 3000
 app.listen(3000, function() {
