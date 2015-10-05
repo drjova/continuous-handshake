@@ -63,8 +63,6 @@ watch.createMonitor('./public/photos', function(monitor) {
   });
 });
 
-
-
 // Listen to port 3000
 app.listen(3000, function() {
   console.log('Server listening on 3000');

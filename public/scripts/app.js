@@ -5,6 +5,8 @@ $(document).ready(function() {
   var $sliderBottom = $('.handshake-bottom-slider');
   var HANDSHAKE_IMAGES_TO_SHOW = 10;
 
+  // Calculate previous images width
+  var imageWidth = ($('body').width() - 40) / 10;
   /*
    * Socket.io connection and listeners
    */
@@ -32,23 +34,28 @@ $(document).ready(function() {
       console.info('Handshake.checkImageLimit');
       if ($sliderBottom.find('img').length > HANDSHAKE_IMAGES_TO_SHOW) {
         // Remove the first image
-        $sliderBottom.slick('slickRemove', 0);
+        $sliderBottom.find('ul > li').last().fadeOut().remove();
         console.info('Handshake.checkImageLimit', 'Removing first image');
       }
     },
     addNewSlide: function(src) {
-      $sliderTop.slick('slickAdd', '<div><img data-lazy="'+src+'" /></div>');
-      $sliderTop.slick('slickNext');
-      $sliderBottom.slick('slickAdd', '<div><img data-lazy="'+src+'" /></div>');
-      $('body').trigger('handshake.new.picture.done');
-      console.info('Handshake.addNewSlide', 'path', src);
+      $('<img />')
+        .on('load', function() {
+          $sliderTop.find('img').attr('src', src);
+          $sliderTop.find('img').fadeIn();
+          $sliderBottom.find('ul').prepend('<li><img width="'+imageWidth+'px" src="'+src+'" /></li>');
+          $sliderBottom.find('ul').last().addClass('magictime puffIn');
+          $('body').trigger('handshake.new.picture.done');
+          console.info('Handshake.addNewSlide', 'path', src);
+        })
+        .attr('src', src);
     },
     loadPrevious: function(images) {
       var length = images.length;
       console.info('Handshake.loadPrevious', length);
       $.when(
         $.each(images, function(index, image) {
-          $sliderBottom.slick('slickAdd', '<div><img data-lazy="/photos/'+image+'" /></div>');
+          $sliderBottom.find('ul').prepend('<li class><img width="'+imageWidth+'px" src="/photos/'+image+'" /></li>');
           if (index == length - 1) {
             $('body').trigger('handshake.new.picture.added', {
               images: '/photos/'+ image
@@ -81,23 +88,4 @@ $(document).ready(function() {
     Handshake.checkImageLimit();
   });
 
-  // Initialize
-  $sliderTop.slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    fade: true,
-    lazyLoad: 'ondemand',
-    draggable: false
-  });
-
-  $sliderBottom.slick({
-    slidesToShow: HANDSHAKE_IMAGES_TO_SHOW,
-    slidesToScroll: 1,
-    dots: false,
-    lazyLoad: 'ondemand',
-    infinite: false,
-    draggable: false,
-    arrows: false
-  });
 });
