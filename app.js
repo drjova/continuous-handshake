@@ -9,9 +9,6 @@ var server = require('http').Server(app);
 // Server listen on 4000
 server.listen(4000);
 
-// Watch directory
-var watch = require('watch');
-
 // Event emiter
 var events = require("events");
 var appEvents = new events.EventEmitter();
@@ -54,13 +51,13 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 
-watch.createMonitor('./public/photos', function(monitor) {
-  console.log('initializing watch');
-  monitor.on("created", function(f, stat) {
+fs.watch('./public/photos', function (ev, filename) {
+  console.info('change', ev, filename);
+  if (filename) {
     appEvents.emit('handshake.new.picture', {
-      images: f.replace('public', '')
+      images: '/photos/'+filename
     });
-  });
+  }
 });
 
 // Listen to port 3000

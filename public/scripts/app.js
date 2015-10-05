@@ -39,6 +39,7 @@ $(document).ready(function() {
       }
     },
     addNewSlide: function(src) {
+      console.log('adding', src);
       $('<img />')
         .on('load', function() {
           $sliderTop.find('img').attr('src', src);
@@ -55,7 +56,7 @@ $(document).ready(function() {
       console.info('Handshake.loadPrevious', length);
       $.when(
         $.each(images, function(index, image) {
-          $sliderBottom.find('ul').prepend('<li class><img width="'+imageWidth+'px" src="/photos/'+image+'" /></li>');
+          $sliderBottom.find('ul').append('<li class><img width="'+imageWidth+'px" src="/photos/'+image+'" /></li>');
           if (index == length - 1) {
             $('body').trigger('handshake.new.picture.added', {
               images: '/photos/'+ image
