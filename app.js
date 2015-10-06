@@ -24,7 +24,9 @@ io.on('connection', function(socket) {
 
   // Emit the new image
   appEvents.on('handshake.new.picture', function(data) {
-    socket.emit('handshake.new.picture', data);
+    setTimeout(function() {
+      socket.emit('handshake.new.picture', data);
+    }, 0);
   });
 
   // Emit the previous files
@@ -51,12 +53,17 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 
+var filenames = [];
+
 fs.watch('./public/photos', function (ev, filename) {
   console.info('change', ev, filename);
-  if (filename) {
-    appEvents.emit('handshake.new.picture', {
-      images: '/photos/'+filename
-    });
+  if (filename && filenames.indexOf(filename) === -1) {
+    filenames.push(filename);
+    setTimeout(function() {
+      appEvents.emit('handshake.new.picture', {
+        images: '/photos/'+filename
+      });
+    }, 0)
   }
 });
 

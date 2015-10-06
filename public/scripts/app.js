@@ -15,13 +15,17 @@ $(document).ready(function() {
   });
 
   socket.on('handshake.new.picture', function (data) {
-    $('body').trigger('handshake.new.picture.added', data);
+    setTimeout(function() {
+      $('body').trigger('handshake.new.picture.added', data);
+    }, 0);
   });
 
   socket.on('handshake.previous.pictures', function (data) {
-    $('body').trigger('handshake.previous.pictures.added', {
-      images: data
-    });
+    setTimeout(function() {
+      $('body').trigger('handshake.previous.pictures.added', {
+        images: data
+      });
+    }, 0);
   });
 
   /*
@@ -88,5 +92,4 @@ $(document).ready(function() {
   $('body').on('handshake.previous.pictures.done', function(ev, data) {
     Handshake.checkImageLimit();
   });
-
 });
