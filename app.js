@@ -3,6 +3,7 @@ var path = require('path');
 var fs = require('fs');
 
 var app = express();
+var watch = require('watch');
 
 // Configure the server
 var server = require('http').Server(app);
@@ -55,18 +56,19 @@ app.get('/', function (req, res) {
 
 var filenames = [];
 
-fs.watch(path.join(__dirname, 'public', 'photos'), function (ev, filename) {
-  if (filename && filenames.indexOf(filename) === -1) {
-    filenames.push(filename);
-    console.info('Change found', ev, filename);
-    setTimeout(function() {
+watch.createMonitor('./public/photos', function(monitor) {
+  console.log('initializing watch');
+  monitor.on("created", function(f, stat) {
+    if (f && filenames.indexOf(f) === -1) {
+      console.info('Change found', f, stat);
+      filenames.push(f);
       appEvents.emit('handshake.new.picture', {
-        images: '/photos/'+filename
+        images: f.replace('public', '')
       });
-    }, 0)
-  } else {
-    console.warn('already notify for', filename);
-  }
+    } else {
+      console.warn('already notify for', f);
+    }
+  });
 });
 
 // Listen to port 3000
