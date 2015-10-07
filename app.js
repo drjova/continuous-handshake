@@ -55,15 +55,17 @@ app.get('/', function (req, res) {
 
 var filenames = [];
 
-fs.watch('./public/photos', function (ev, filename) {
-  console.info('change', ev, filename);
+fs.watch(path.join(__dirname, 'public', 'photos'), function (ev, filename) {
   if (filename && filenames.indexOf(filename) === -1) {
     filenames.push(filename);
+    console.info('Change found', ev, filename);
     setTimeout(function() {
       appEvents.emit('handshake.new.picture', {
         images: '/photos/'+filename
       });
     }, 0)
+  } else {
+    console.warn('already notify for', filename);
   }
 });
 
